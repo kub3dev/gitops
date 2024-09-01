@@ -1,47 +1,7 @@
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  namespace: development
-  name: drone-runner
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - create
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - pods/log
-  verbs:
-  - get
-  - create
-  - delete
-  - list
-  - watch
-  - update
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: drone-runner
-  namespace: development
-subjects:
-- kind: ServiceAccount
-  name: drone-runner
-  namespace: drone
-roleRef:
-  kind: Role
-  name: drone-runner
-  apiGroup: rbac.authorization.k8s.io
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: drone
+  name: drone-deployment
   namespace: development
   labels:
     app: drone
@@ -62,18 +22,21 @@ spec:
     spec:
       containers:
       - name: drone
-        image: drone/drone:2
+        image: drone/drone:1.6.5
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
+        - containerPort: 443
         envFrom:
-          - secretRef:
-              name: drone-secret
+        - secretRef:
+            name: drone-secret
+        - configMapRef:
+            name: drone-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: drone
+  name: drone-service
   namespace: development
   labels:
     app: drone
@@ -94,7 +57,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: drone-route
+  name: drone-ingress
   namespace: development
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
