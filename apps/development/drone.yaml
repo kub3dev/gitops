@@ -1,105 +1,77 @@
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  namespace: development
-  name: drone
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - create
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - pods/log
-  verbs:
-  - get
-  - create
-  - delete
-  - list
-  - watch
-  - update
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: drone
-  namespace: development
-subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: development
-roleRef:
-  kind: Role
-  name: drone
-  apiGroup: rbac.authorization.k8s.io
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drone
   namespace: development
   labels:
-    name: drone
+    app: drone
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      name: drone
+      app: drone
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
-        name: drone
+        app: drone
     spec:
       containers:
-      - name: runner
-        image: drone/drone-runner-kube:latest
+      - name: drone
+        image: drone/drone:2
+        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         envFrom:
-        - secretRef:
-            name: drone-secret
+          - secretRef:
+              name: drone-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: drone-svc
+  name: drone
   namespace: development
   labels:
-    name: drone
+    app: drone
 spec:
-  ports:
-  - port: 3000
-    name: drone
+  type: ClusterIP
   selector:
     app: drone
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 80
+    - protocol: TCP
+      name: https
+      port: 443
+      targetPort: 443
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-issuer
-  generation: 1
   name: drone-route
   namespace: development
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - "drone.kub3.dev"
+    secretName: le-drone-kub3-dev-cert-tls
   rules:
   - host: drone.kub3.dev
     http:
       paths:
-      - backend:
-          service:
-            name: sonar
-            port:
-              number: 3000
+      - pathType: Prefix
         path: /
-        pathType: Prefix
-  tls:
-  - hosts:
-    - drone.kub3.dev
-    secretName: le-drone-kub3-dev-cert-tls
+        backend:
+          service:
+            name: drone
+            port:
+              number: 80
