@@ -96,7 +96,7 @@ spec:
       paths:
       - backend:
           service:
-            name: sonar-svc
+            name: sonar
             port:
               number: 9000
         path: /
