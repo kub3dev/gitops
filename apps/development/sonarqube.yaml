@@ -1,3 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: sonar-pvc
+  namespace: sonar
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -51,7 +63,7 @@ spec:
       volumes:
       - name: app-pvc
         persistentVolumeClaim:
-          claimName: development-pvc
+          claimName: sonar-pvc
 ---
 apiVersion: v1
 kind: Service
