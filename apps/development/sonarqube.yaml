@@ -98,6 +98,7 @@ spec:
         backend:
           serviceName: sonar
           servicePort: 9000
+        pathType: Prefix
   tls:
   - hosts:
     - sonarqube.kub3.dev
