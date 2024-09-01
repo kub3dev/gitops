@@ -83,7 +83,7 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-  generation: 2
+  generation: 1
   name: drone-route
   namespace: development
 spec:
