@@ -5,7 +5,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
     ingress.kubernetes.io/proxy-body-size: '0'
     ingress.kubernetes.io/ssl-redirect: 'true'
-    meta.helm.sh/release-name: harbor-demo
+    meta.helm.sh/release-name: harbor
     meta.helm.sh/release-namespace: harbor
     nginx.ingress.kubernetes.io/proxy-body-size: '0'
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
@@ -13,14 +13,14 @@ metadata:
   generation: 1
   labels:
     app: harbor
-    app.kubernetes.io/instance: harbor-demo
+    app.kubernetes.io/instance: harbor
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: harbor
     app.kubernetes.io/part-of: harbor
     app.kubernetes.io/version: 2.11.0
     chart: harbor
     heritage: Helm
-    release: harbor-demo
+    release: harbor
   managedFields:
     - apiVersion: networking.k8s.io/v1
       fieldsType: FieldsV1
@@ -51,7 +51,7 @@ metadata:
       manager: helm
       operation: Update
       time: '2024-09-01T17:26:03Z'
-  name: harbor-demo-ingress
+  name: harbor-ingress
   namespace: harbor
   resourceVersion: '56476'
   uid: 5ed2f26a-87e4-4e27-b69f-cadf1469ec0c
@@ -62,42 +62,42 @@ spec:
         paths:
           - backend:
               service:
-                name: harbor-demo-core
+                name: harbor-core
                 port:
                   number: 80
             path: /api/
             pathType: Prefix
           - backend:
               service:
-                name: harbor-demo-core
+                name: harbor-core
                 port:
                   number: 80
             path: /service/
             pathType: Prefix
           - backend:
               service:
-                name: harbor-demo-core
+                name: harbor-core
                 port:
                   number: 80
             path: /v2/
             pathType: Prefix
           - backend:
               service:
-                name: harbor-demo-core
+                name: harbor-core
                 port:
                   number: 80
             path: /chartrepo/
             pathType: Prefix
           - backend:
               service:
-                name: harbor-demo-core
+                name: harbor-core
                 port:
                   number: 80
             path: /c/
             pathType: Prefix
           - backend:
               service:
-                name: harbor-demo-portal
+                name: harbor-portal
                 port:
                   number: 80
             path: /
