@@ -1,0 +1,106 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: development
+  name: drone
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - create
+  - delete
+  - list
+  - watch
+  - update
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: drone
+  namespace: development
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: development
+roleRef:
+  kind: Role
+  name: drone
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone
+  namespace: development
+  labels:
+    name: drone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: drone
+  template:
+    metadata:
+      labels:
+        name: drone
+    spec:
+      containers:
+      - name: runner
+        image: drone/drone-runner-kube:latest
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: drone-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drone-svc
+  namespace: development
+  labels:
+    name: drone
+spec:
+  ports:
+  - port: 3000
+    name: drone
+  selector:
+    app: drone
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  generation: 1
+  name: drone-route
+  namespace: development
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: drone.kub3.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: sonar
+            port:
+              number: 3000
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - drone.kub3.dev
+    secretName: le-drone-kub3-dev-cert-tls
