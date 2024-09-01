@@ -85,7 +85,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  generation: 2
+  generation: 3
   name: sonarqube-route
   namespace: development
 spec:
