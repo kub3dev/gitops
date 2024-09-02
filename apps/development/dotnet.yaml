@@ -41,10 +41,13 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-issuer
   name: dotnet-ingress
   namespace: development
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    rewrite-target: /$2
+    proxy-redirect-from: /
+    proxy-redirect-to: /weatherforecast/
 spec:
   ingressClassName: nginx
   rules:
@@ -56,7 +59,7 @@ spec:
             name: dotnet-service
             port:
               number: 8080
-        path: /weatherforecast/
+        path: /
         pathType: Prefix
   tls:
   - hosts:
