@@ -43,7 +43,6 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-  generation: 5
   name: dotnet-ingress
   namespace: development
 spec:
