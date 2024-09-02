@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: bellinati
-          image: fclebinho/bpnegociacaoapi:1.0.0
+          image: fclebinho/bpnegociacaoapi:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
