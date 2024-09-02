@@ -39,8 +39,8 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-  generation: 2
-  name: nginx-route
+  generation: 3
+  name: nginx-ingress
   namespace: staging
 spec:
   ingressClassName: nginx
