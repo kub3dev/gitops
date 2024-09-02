@@ -18,7 +18,7 @@ spec:
           image: fclebinho/weatherforecast:1.1.0
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 5069
 ---
 apiVersion: v1
 kind: Service
@@ -28,9 +28,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 8080
+      port: 5069
       protocol: TCP
-      targetPort: 8080
+      targetPort: 5069
   selector:
     name: dotnet
 ---
@@ -52,7 +52,7 @@ spec:
           service:
             name: dotnet
             port:
-              number: 8080
+              number: 5069
         path: /
         pathType: Prefix
   tls:
