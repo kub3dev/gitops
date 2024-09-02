@@ -39,7 +39,7 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-  generation: 4
+  generation: 1
   name: nginx-ingress
   namespace: production
 spec:
