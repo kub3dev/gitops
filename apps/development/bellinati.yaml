@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bellinati-deployment
+  namespace: development
+  labels:
+    app: bellinati
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      name: bellinati
+  template:
+    metadata:
+      labels:
+        name: bellinati
+    spec:
+      containers:
+        - name: bellinati
+          image: fclebinho/bpnegociacaoapi:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bellinati-service
+  namespace: development
+  labels:
+    app: bellinati
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    name: bellinati
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bellinati-ingress
+  namespace: development
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: bellinati.kub3.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: bellinati-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - bellinati.kub3.dev
+    secretName: le-bellinati-dev-cert-tls
