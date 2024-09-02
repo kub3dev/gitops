@@ -13,7 +13,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sonar
+  name: sonar-deployment
   namespace: development
   labels:
     app: sonar
@@ -68,7 +68,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: sonar-svc
+  name: sonar-service
   namespace: development
   labels:
     app: sonar
@@ -86,7 +86,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
   generation: 4
-  name: sonarqube-route
+  name: sonar-ingress
   namespace: development
 spec:
   ingressClassName: nginx
@@ -96,7 +96,7 @@ spec:
       paths:
       - backend:
           service:
-            name: sonar-svc
+            name: sonar-service
             port:
               number: 9000
         path: /

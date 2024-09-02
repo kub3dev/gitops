@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: site
+  name: nginx-deployment
   namespace: production
 spec:
   replicas: 5
   selector:
     matchLabels:
-      name: nginx-server
+      name: nginx
   template:
     metadata:
       labels:
-        name: nginx-server
+        name: nginx
     spec:
       containers:
         - name: nginx
@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-server
+  name: nginx-service
   namespace: production
 spec:
   ports:
@@ -32,7 +32,7 @@ spec:
       protocol: TCP
       targetPort: 80
   selector:
-    name: nginx-server
+    name: nginx
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -50,7 +50,7 @@ spec:
       paths:
       - backend:
           service:
-            name: nginx-server
+            name: nginx-service
             port:
               number: 80
         path: /
