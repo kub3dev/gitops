@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: dotnet-deployment
   namespace: development
+  labels:
+    app: dotnet
 spec:
   replicas: 5
   selector:
@@ -25,6 +27,8 @@ kind: Service
 metadata:
   name: dotnet-service
   namespace: development
+  labels:
+    app: dotnet
 spec:
   ports:
     - name: http
