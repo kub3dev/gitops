@@ -45,9 +45,9 @@ spec:
         - name: KC_DB
           value: "mysql"
         - name: KC_DB_URL
-          value: "jdbc:mysql://mysql/keycloak"
+          value: "jdbc:mysql://mysql-service/keycloak"
         - name: KC_DB_URL_HOST
-          value: "mysql"
+          value: "mysql-service"
         - name: KC_DB_URL_PORT
           value: "3306"
         - name: KC_DB_URL_DATABASE
@@ -55,7 +55,7 @@ spec:
         - name: KC_DB_USERNAME
           value: "root"
         - name: KC_DB_PASSWORD
-          value: "password"
+          value: "root"
 
         ports:
         - name: http
