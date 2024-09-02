@@ -110,8 +110,7 @@ spec:
             name: keycloak-service
             port:
               number: 8080
-#        path: /keycloak/(.*)
-        path: /
+        path: /keycloak/(.*)
         pathType: Prefix
   tls:
   - hosts:
