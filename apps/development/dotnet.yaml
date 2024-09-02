@@ -45,9 +45,6 @@ metadata:
   namespace: development
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-    rewrite-target: /$2
-    proxy-redirect-from: /
-    proxy-redirect-to: /weatherforecast
 spec:
   ingressClassName: nginx
   rules:
