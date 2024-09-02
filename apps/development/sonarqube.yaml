@@ -85,7 +85,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  generation: 4
+  generation: 1
   name: sonar-ingress
   namespace: development
 spec:
