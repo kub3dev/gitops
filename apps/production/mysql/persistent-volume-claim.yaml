@@ -3,8 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-persistent-volume-claim
   namespace: production
+  labels:
+    type: local
 spec:
-  storageClassName: none
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
