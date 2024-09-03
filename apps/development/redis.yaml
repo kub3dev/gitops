@@ -33,18 +33,18 @@ metadata:
   name: redis-deployment
   namespace: development
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: redis
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: redis
         name: redis
     spec:
-      nodeSelector:
-        node-type: worker
       containers:
       - name: redis
         image: redis:latest 
