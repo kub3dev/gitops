@@ -4,7 +4,6 @@ metadata:
   name: mysql-persistent-volume-claim
   namespace: production
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
