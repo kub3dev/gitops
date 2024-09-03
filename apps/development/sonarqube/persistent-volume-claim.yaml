@@ -5,6 +5,7 @@ metadata:
   namespace: development
 spec:
   storageClassName: local-path
+  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteOnce
   resources:
