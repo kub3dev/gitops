@@ -1,19 +1,4 @@
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-development-persistent-volume
-  namespace: development
-  labels:
-    type: local
-spec:
-  capacity:
-    storage: 20Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-persistent-volume-claim
@@ -54,10 +39,10 @@ spec:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: mysql-development-persistent-storage
+        - name: mysql-volume-storage
           mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-development-persistent-storage
+      - name: mysql-volume-storage
         persistentVolumeClaim:
           claimName: mysql-persistent-volume-claim
 ---

@@ -4,9 +4,9 @@ metadata:
   name: redis-persistent-volume-claim
   namespace: development
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
-  storageClassName: longhorn
   resources:
     requests:
       storage: 5Gi
@@ -31,7 +31,7 @@ spec:
         node-type: worker
       containers:
       - name: redis
-        image: redis:latest
+        image: redis:latest 
         args: ["--appendonly", "yes"]
         ports:
           - name: redis
