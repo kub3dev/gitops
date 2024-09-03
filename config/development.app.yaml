@@ -10,7 +10,9 @@ spec:
   source:
     repoURL: https://github.com/kub3dev/gitops.git
     targetRevision: HEAD
-    path: apps/development/**/*
+    path: apps/development
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: development
