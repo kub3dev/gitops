@@ -5,6 +5,7 @@ metadata:
   namespace: production
 spec:
   storageClassName: none
+  Source: HostPath
   accessModes:
     - ReadWriteOnce
   resources:
