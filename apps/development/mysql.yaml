@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-persistent-volume
+  name: mysql-dev-persistent-volume
   namespace: development
   labels:
     type: local
