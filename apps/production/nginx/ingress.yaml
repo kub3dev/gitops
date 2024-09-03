@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+  generation: 1
+  name: nginx-ingress
+  namespace: production
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: confeitei.app
+    http:
+      paths:
+      - backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - confeitei.app
+    secretName: le-confeitei-cert-tls
