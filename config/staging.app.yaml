@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/kub3dev/gitops.git
     targetRevision: HEAD
-    path: apps/staging/**/*
+    path: apps/staging
   destination:
     server: https://kubernetes.default.svc
     namespace: staging
