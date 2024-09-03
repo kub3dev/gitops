@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  namespace: development
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      securityContext:
+        fsGroup: 2000 
+      containers:
+      - name: postgress
+        image: bitnami/postgresql
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        envFrom:
+        - secretRef:
+            name: postgres-secret
+        volumeMounts:
+        - name: postgres-volume
+          mountPath: /postgres/data
+      volumes:
+      - name: postgres-volume
+        persistentVolumeClaim:
+          claimName: postgres-persistent-volume-claim
