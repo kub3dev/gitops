@@ -61,12 +61,6 @@ spec:
         volumeMounts:
         - name: keycloak-persistent-volume
           mountPath: /opt/keycloak/data
-        resources:
-          requests:
-            memory: "1024Mi"
-          limits:
-            memory: "2048Mi"
-            cpu: "2"
       volumes:
       - name: keycloak-persistent-volume
         persistentVolumeClaim:
