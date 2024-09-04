@@ -58,3 +58,10 @@ spec:
             httpGet:
               path: /auth/realms/master
               port: 8080
+          volumeMounts:
+            - name: keycloak-persistent-volume
+              mountPath: /opt/keycloak/data
+      volumes:
+        - name: keycloak-persistent-volume
+          persistentVolumeClaim:
+            claimName: keycloak-persistent-volume-claim
