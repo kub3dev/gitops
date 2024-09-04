@@ -14,7 +14,7 @@ spec:
       paths: 
       - backend: 
           service: 
-            name: keycloak
+            name: keycloak-service
             port: 
               number: 53582
         path: /keycloak/(.*)
