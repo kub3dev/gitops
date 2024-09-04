@@ -20,48 +20,54 @@ spec:
         app: keycloak
     spec: 
       containers: 
-        - name: keycloak
-          image: quay.io/keycloak/keycloak:8.0.2
-          imagePullPolicy: Always
-          env: 
-            - name: KEYCLOAK_USER
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-secret
-                  key: username
-            - name: KEYCLOAK_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-secret
-                  key: password
-            - name: PROXY_ADDRESS_FORWARDING
-              valueFrom:
-                configMapKeyRef:
-                  name: keycloak-config
-                  key: proxyAddressForwarding
-            - name: KEYCLOAK_FRONTEND_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: keycloak-config
-                  key: keycloakFrontendUrl
-            - name: KEYCLOAK_ADMIN_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: keycloak-config
-                  key: keycloakAdminUrl
-          ports: 
-            - name: http
-              containerPort: 8080
-            - name: https
-              containerPort: 8443
-          readinessProbe:
-            httpGet:
-              path: /auth/realms/master
-              port: 8080
-          volumeMounts:
-            - name: keycloak-persistent-volume
-              mountPath: /opt/keycloak/data
-      volumes:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:8.0.2
+        imagePullPolicy: Always
+        ports: 
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        readinessProbe:
+          httpGet:
+            path: /auth/realms/master
+            port: 8080
+        env: 
+        - name: KEYCLOAK_USER
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: username
+        - name: KEYCLOAK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-secret
+              key: password
+        - name: PROXY_ADDRESS_FORWARDING
+          valueFrom:
+            configMapKeyRef:
+              name: keycloak-config
+              key: proxyAddressForwarding
+        - name: KEYCLOAK_FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: keycloak-config
+              key: keycloakFrontendUrl
+        - name: KEYCLOAK_ADMIN_URL
+          valueFrom:
+            configMapKeyRef:
+              name: keycloak-config
+              key: keycloakAdminUrl
+        volumeMounts:
         - name: keycloak-persistent-volume
-          persistentVolumeClaim:
-            claimName: keycloak-persistent-volume-claim
+          mountPath: /opt/keycloak/data
+        resources:
+          requests:
+            memory: "1024Mi"
+          limits:
+            memory: "2048Mi"
+            cpu: "2"
+      volumes:
+      - name: keycloak-persistent-volume
+        persistentVolumeClaim:
+          claimName: keycloak-persistent-volume-claim
