@@ -17,7 +17,7 @@ spec:
             name: financeiro-service
             port:
               number: 8080
-        path: /api
+        path: /
         pathType: Prefix
   tls:
   - hosts:
