@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-  generation: 1
   name: financeiro-ingress
   namespace: development
 spec:
