@@ -19,3 +19,7 @@ spec:
               number: 53582
         path: /keycloak/(.*)
         pathType: ImplementationSpecific
+tls:
+- hosts:
+  - identitty.kub3.dev
+  secretName: le-kub3-dev-cert-tls
