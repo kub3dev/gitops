@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: gastei.kub3.dev
+  - host: identity.kub3.dev
     http:
       paths:
       - backend:
@@ -20,5 +20,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - gastei.kub3.dev
-    secretName: le-gastei-kub3-dev-cert-tls
+    - identity.kub3.dev
+    secretName: le-identity-kub3-dev-cert-tls
