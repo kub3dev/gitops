@@ -25,9 +25,9 @@ spec:
                   key: credentialsSecret
             - name: Keycloak__realm
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   name: identity-config
-                  key: credentialsSecret
+                  key: realm
             - name: Keycloak__auth_server_url
               valueFrom:
                 configMapKeyRef:
