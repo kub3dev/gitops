@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-  name: financeiro-ingress
+  name: identity-ingress
   namespace: development
 spec:
   ingressClassName: nginx
@@ -13,7 +13,7 @@ spec:
       paths:
       - backend:
           service:
-            name: financeiro-service
+            name: identity-service
             port:
               number: 8080
         path: /
