@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: financeiro
-          image: fclebinho/financeiro-api:2024.9.4.1.49.3
+          image: fclebinho/financeiro-api:2024.9.5.11.37.48
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
