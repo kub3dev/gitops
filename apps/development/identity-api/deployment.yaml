@@ -20,8 +20,8 @@ spec:
           env:
             - name: "Keycloak:credentials:secret"
               valueFrom:
-                configMapKeyRef:
-                  name: identity-config
+                secretKeyRef:
+                  name: identity-secret
                   key: credentialsSecret
             - name: "Keycloak:realm"
               valueFrom:
