@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: identity
-          image: fclebinho/financeiro-api:2024.9.5.11.37.48
+          image: fclebinho/financeiro-api:2024.9.6.1.51.54
           imagePullPolicy: Always
           env:
             - name: Keycloak__credentials__secret
