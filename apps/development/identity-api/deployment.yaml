@@ -18,37 +18,37 @@ spec:
           image: fclebinho/financeiro-api:2024.9.6.1.51.54
           imagePullPolicy: Always
           env:
-            - name: Keycloak__credentials__secret
+            - name: "Keycloak:credentials:secret"
               valueFrom:
                 configMapKeyRef:
                   name: identity-config
                   key: credentialsSecret
-            - name: Keycloak__realm
+            - name: "Keycloak:realm"
               valueFrom:
                 configMapKeyRef:
                   name: identity-config
                   key: realm
-            - name: Keycloak__auth_server_url
+            - name: "Keycloak:auth-server-url"
               valueFrom:
                 configMapKeyRef:
                   name: identity-config
                   key: authServerUrl
-            - name: Keycloak__ssl_required
+            - name: "Keycloak:ssl-required"
               valueFrom:
                 configMapKeyRef:
                   name: identity-config
                   key: sslRequired
-            - name: Keycloak__resource
+            - name: "Keycloak:resource"
               valueFrom:
                 configMapKeyRef:
                   name: identity-config
                   key: resource
-            - name: Keycloak__confidential_port
+            - name: "Keycloak:confidential-port"
               valueFrom:
                 configMapKeyRef:
                   name: identity-config
                   key: confidentialPort
-            - name: Keycloak__verify_token_audience
+            - name: "Keycloak:verify-token-audience"
               valueFrom:
                 configMapKeyRef:
                   name: identity-config
